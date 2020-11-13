@@ -23,5 +23,34 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
+router.post("/api/workouts", ({ body }, res) => {
+  Workout.insertMany(body)
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+router.put("/api/workouts/:id", function (req, res) {
+  Workout.update(
+    req.body,
+    {
+      where: {
+        id: req.body.id,
+        type: req.body.type,
+        name: req.body.name,
+        duration: req.body.duration,
+        weight: req.body.weight,
+        reps: req.body.reps,
+        sets: req.body.sets,
+        distance: req.body.distance
+      }
+    }).then(function (dbWorkout) {
+      console.log(req.body);
+      res.json(dbWorkout);
+    });
+});
 
 module.exports = router;

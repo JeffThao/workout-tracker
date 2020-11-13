@@ -21,12 +21,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutTrackerd
   }
 );
 
-app.use = function use(fn) {
-    let offset = 0;
-    const path = "/";
-}
-
-app.use(require("./routes/api-routes"));
+app.use(require("./routes/api-routes.js"));
 app.use(require("./routes/html-routes.js"));
 
 app.listen(PORT, () => {
