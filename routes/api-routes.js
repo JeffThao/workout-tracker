@@ -1,15 +1,16 @@
-console.log("api routes connected");
-const db = require("../models");
+const router = require("express").Router();
+const Workout = require("../models/workout.js");
 
-module.exports = function (app) {
-  app.get("/api/workouts", (req, res) => {
-    db.Workout.find({})
-    .then(workout => {
-      res.json(workout);
+router.get("/api/workouts/range", (req, res) => {
+  Workout.find({})
+    .sort({ day: -1 })
+    .limit(7)
+    .then(dbWorkout => {
+      res.json(dbWorkout);
     })
     .catch(err => {
-      res.json(err);
+      res.status(400).json(err);
     });
-  });
+});
 
-}
+module.exports = router;
